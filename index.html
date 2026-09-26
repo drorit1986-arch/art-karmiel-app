@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ארט כרמיאל</title>
+<style>
+:root{
+  --ink:#2b2320; --paper:#fdfaf5; --card:#ffffff;
+  --brand:#c1440e; --brand-2:#1f6f5c; --line:#e8dfd2; --muted:#8a7f70;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#f1eadf; --paper:#1c1712; --card:#241d17;
+    --line:#3a2f24; --muted:#b3a493;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#f1eadf; --paper:#1c1712; --card:#241d17; --line:#3a2f24; --muted:#b3a493;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%}
+body{
+  margin:0; height:100%; background:var(--paper); color:var(--ink);
+  font-family:'Segoe UI',Tahoma,Arial,sans-serif;
+  display:flex; flex-direction:column;
+}
+header{
+  position:sticky; top:0; z-index:20; background:var(--card);
+  padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between;
+}
+header h1{font-size:18px; margin:0; color:var(--brand)}
+header .sub{font-size:11px; color:var(--muted); margin-top:2px}
+.cart-btn{
+  position:relative; background:var(--brand); color:#fff; border:none;
+  border-radius:12px; padding:8px 12px; font-size:14px; cursor:pointer;
+}
+.badge{
+  position:absolute; top:-6px; left:-6px; background:var(--brand-2); color:#fff;
+  border-radius:50%; width:18px; height:18px; font-size:11px;
+  display:flex; align-items:center; justify-content:center;
+}
+main{flex:1; overflow-y:auto; padding:12px 16px 90px}
+.chips{display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; margin-bottom:12px}
+.chip{
+  flex:none; padding:7px 14px; border-radius:999px; border:1px solid var(--line);
+  background:var(--card); font-size:13px; cursor:pointer; color:var(--ink);
+}
+.chip.active{background:var(--brand); color:#fff; border-color:var(--brand)}
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:10px; display:flex; flex-direction:column;
+}
+.thumb{
+  width:100%; aspect-ratio:1; border-radius:10px; margin-bottom:8px;
+  display:flex; align-items:center; justify-content:center; font-size:28px;
+  background:linear-gradient(135deg,#f1e4d0,#e3d3c1);
+}
+@media (prefers-color-scheme:dark){.thumb{background:linear-gradient(135deg,#332a20,#241d17)}}
+.card .name{font-size:13px; line-height:1.35; min-height:36px}
+.card .price{color:var(--brand); font-weight:700; margin:6px 0 8px; font-size:14px}
+.add-btn{
+  border:none; background:var(--brand-2); color:#fff; border-radius:9px;
+  padding:8px; font-size:13px; cursor:pointer;
+}
+.section-title{font-size:15px; margin:18px 0 10px; font-weight:700}
+nav.bottom{
+  position:fixed; bottom:0; left:0; right:0; background:var(--card);
+  border-top:1px solid var(--line); display:flex;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  z-index:20;
+}
+nav.bottom button{
+  flex:1; background:none; border:none; padding:10px 4px 8px; font-size:11px;
+  color:var(--muted); cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px;
+}
+nav.bottom button.active{color:var(--brand)}
+nav.bottom .ic{font-size:19px}
+.sheet-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:30; display:none;
+}
+.sheet-overlay.open{display:block}
+.sheet{
+  position:fixed; left:0; right:0; bottom:0; background:var(--card);
+  border-radius:18px 18px 0 0; z-index:31; max-height:80vh; overflow-y:auto;
+  padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));
+  transform:translateY(100%); transition:transform .25s ease;
+}
+.sheet.open{transform:translateY(0)}
+.sheet h2{margin:0 0 12px; font-size:17px}
+.cart-row{display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--line); font-size:14px}
+.cart-row .qty{display:flex; align-items:center; gap:8px}
+.qty button{width:26px; height:26px; border-radius:8px; border:1px solid var(--line); background:var(--paper); color:var(--ink); font-size:15px}
+.total-row{display:flex; justify-content:space-between; font-weight:700; padding:14px 0; font-size:15px}
+.field{width:100%; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--paper); color:var(--ink); font-size:14px; margin-bottom:10px}
+.send-btn{
+  width:100%; padding:13px; border:none; border-radius:12px; background:var(--brand-2);
+  color:#fff; font-size:15px; font-weight:700; cursor:pointer;
+}
+.note{font-size:12px; color:var(--muted); text-align:center; margin-top:8px}
+.empty{text-align:center; color:var(--muted); padding:30px 0; font-size:13px}
+.hidden{display:none !important}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>ארט כרמיאל 🎨</h1>
+    <div class="sub">החנות הוותיקה לציוד אומנות • משנת 1997</div>
+  </div>
+  <button class="cart-btn" onclick="openCart()">עגלה
+    <span class="badge hidden" id="cartBadge">0</span>
+  </button>
+</header>
+
+<main id="main">
+  <div class="chips" id="chips"></div>
+  <div id="productsWrap"></div>
+</main>
+
+<nav class="bottom">
+  <button class="active" onclick="scrollTop()"><span class="ic">🏠</span>ראשי</button>
+  <button onclick="openCart()"><span class="ic">🛒</span>עגלה</button>
+  <button onclick="contactWA()"><span class="ic">💬</span>וואטסאפ</button>
+  <button onclick="callStore()"><span class="ic">📞</span>התקשרו</button>
+</nav>
+
+<div class="sheet-overlay" id="overlay" onclick="closeCart()"></div>
+<div class="sheet" id="cartSheet">
+  <h2>ההזמנה שלי</h2>
+  <div id="cartItems"></div>
+  <div class="total-row"><span>סה"כ משוער</span><span id="cartTotal">0 ₪</span></div>
+  <input class="field" id="custName" placeholder="שם מלא">
+  <input class="field" id="custPhone" placeholder="טלפון ליצירת קשר">
+  <textarea class="field" id="custNote" placeholder="הערות (צבע, מידה, כמות מדויקת...)" rows="2"></textarea>
+  <button class="send-btn" onclick="sendOrder()">שליחת ההזמנה בוואטסאפ</button>
+  <div class="note">זו לא רכישה מקוונת — ההזמנה נשלחת לחנות ואתם תתואמו איתם תשלום ואיסוף/משלוח</div>
+</div>
+
+<script>
+const STORE_PHONE = "972543220983";
+const STORE_EMOJI = {
+  "בדי קנבס":"🖼️","כני ציור":"🎨","מכחולים":"🖌️","רישום וגרפיקה":"✏️",
+  "מרקרים וטושים":"🖊️","חומרי יצירה":"🧶","נייר":"📄","מדיומים ולכות":"🧴",
+  "צבעים לאומנות":"🎨","תחריט והדפס":"🖨️"
+};
+
+const catalog = {
+  "צבעים לאומנות":[
+    {n:"סט צבעי שמן 24 יחידות", p:89},
+    {n:"צבעי מים קוביות וואן גוך 18 יחידות", p:186},
+    {n:"צבעי מים חברת סקורה 36 יח'", p:203},
+    {n:"צבעי מים סקורה 60 יח'", p:356},
+    {n:"צבעי מים וואן גוך 12 יח'", p:104},
+  ],
+  "מרקרים וטושים":[
+    {n:"פנדה 12 יח' חברת TALENS", p:15},
+    {n:"פנדה 24 יח' חברת TALENS", p:27},
+    {n:"עט גלי רול לבן מידה 10", p:10},
+  ],
+  "רישום וגרפיקה":[
+    {n:"רפידוגרף חד פעמי סקורה מידה 01", p:9},
+    {n:"רפידוגרף חד פעמי סקורה מידה 03", p:9},
+    {n:"רפידוגרף חד פעמי סקורה מידה 05", p:9},
+    {n:"רפידוגרף חד פעמי סקורה מידה 08", p:9},
+  ],
+  "בדי קנבס":[
+    {n:"קנבס מתוח 30x40 ס\"מ", p:25},
+    {n:"קנבס מתוח 50x70 ס\"מ", p:55},
+  ],
+  "כני ציור":[
+    {n:"כן ציור עץ מתקפל", p:145},
+    {n:"כן ציור שולחני", p:79},
+  ],
+  "מכחולים":[
+    {n:"סט מכחולים לאקריליק ומים", p:39},
+    {n:"מכחול שמן עגול מס' 8", p:14},
+  ],
+  "חומרי יצירה":[
+    {n:"פימו Fimo צבעוני 8 יח'", p:69},
+    {n:"סט אביזרי יצירה בסיסי", p:45},
+  ],
+  "נייר":[
+    {n:"בלוק ציור לאקוורל A4", p:42},
+    {n:"ספר סקיצות A5", p:28},
+  ],
+};
+
+let cart = {};
+let currentCat = "הכל";
+
+function allProducts(){
+  const list=[];
+  for(const [cat,items] of Object.entries(catalog)){
+    items.forEach(it=>list.push({...it, cat}));
+  }
+  return list;
+}
+
+function renderChips(){
+  const chips=document.getElementById('chips');
+  const cats=["הכל", ...Object.keys(catalog)];
+  chips.innerHTML = cats.map(c=>
+    `<button class="chip ${c===currentCat?'active':''}" onclick="setCat('${c}')">${STORE_EMOJI[c]||'✨'} ${c}</button>`
+  ).join('');
+}
+
+function setCat(c){ currentCat=c; renderChips(); renderProducts(); }
+
+function renderProducts(){
+  const wrap=document.getElementById('productsWrap');
+  const items = currentCat==="הכל" ? allProducts() : catalog[currentCat].map(it=>({...it,cat:currentCat}));
+  if(currentCat==="הכל"){
+    let html='';
+    for(const [cat,list] of Object.entries(catalog)){
+      html += `<div class="section-title">${STORE_EMOJI[cat]||''} ${cat}</div><div class="grid">`;
+      html += list.map(it=>productCard(it,cat)).join('');
+      html += `</div>`;
+    }
+    wrap.innerHTML = html;
+  } else {
+    wrap.innerHTML = `<div class="grid">${items.map(it=>productCard(it,currentCat)).join('')}</div>`;
+  }
+}
+
+function productCard(it,cat){
+  const key = cat+"__"+it.n;
+  return `<div class="card">
+    <div class="thumb">${STORE_EMOJI[cat]||'🎨'}</div>
+    <div class="name">${it.n}</div>
+    <div class="price">${it.p} ₪</div>
+    <button class="add-btn" onclick="addToCart('${key.replace(/'/g,"\\'")}','${it.n.replace(/'/g,"\\'")}',${it.p})">הוספה לעגלה</button>
+  </div>`;
+}
+
+function addToCart(key,name,price){
+  if(!cart[key]) cart[key]={name,price,qty:0};
+  cart[key].qty++;
+  updateBadge();
+  renderCart();
+}
+function changeQty(key,delta){
+  if(!cart[key]) return;
+  cart[key].qty+=delta;
+  if(cart[key].qty<=0) delete cart[key];
+  updateBadge();
+  renderCart();
+}
+function updateBadge(){
+  const count=Object.values(cart).reduce((s,i)=>s+i.qty,0);
+  const badge=document.getElementById('cartBadge');
+  if(count>0){ badge.textContent=count; badge.classList.remove('hidden'); }
+  else badge.classList.add('hidden');
+}
+function renderCart(){
+  const wrap=document.getElementById('cartItems');
+  const entries=Object.entries(cart);
+  if(entries.length===0){
+    wrap.innerHTML='<div class="empty">העגלה שלך ריקה — הוסיפו מוצרים כדי לשלוח הזמנה</div>';
+  } else {
+    wrap.innerHTML = entries.map(([key,it])=>`
+      <div class="cart-row">
+        <span>${it.name}</span>
+        <div class="qty">
+          <button onclick="changeQty('${key.replace(/'/g,"\\'")}',-1)">−</button>
+          <span>${it.qty}</span>
+          <button onclick="changeQty('${key.replace(/'/g,"\\'")}',1)">+</button>
+        </div>
+      </div>`).join('');
+  }
+  const total = entries.reduce((s,[,it])=>s+it.qty*it.price,0);
+  document.getElementById('cartTotal').textContent = total + " ₪";
+}
+
+function openCart(){
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('cartSheet').classList.add('open');
+  renderCart();
+}
+function closeCart(){
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('cartSheet').classList.remove('open');
+}
+function scrollTop(){ document.getElementById('main').scrollTo({top:0,behavior:'smooth'}); }
+
+function sendOrder(){
+  const entries=Object.entries(cart);
+  if(entries.length===0){ alert('העגלה ריקה — הוסיפו מוצרים לפני שליחת ההזמנה'); return; }
+  const name=document.getElementById('custName').value.trim();
+  const phone=document.getElementById('custPhone').value.trim();
+  const note=document.getElementById('custNote').value.trim();
+  let msg = `שלום ארט כרמיאל, אשמח להזמין:%0a`;
+  entries.forEach(([,it])=>{ msg += `• ${it.name} x${it.qty} (${it.price*it.qty} ₪)%0a`; });
+  const total = entries.reduce((s,[,it])=>s+it.qty*it.price,0);
+  msg += `סה"כ משוער: ${total} ₪%0a`;
+  if(name) msg += `שם: ${name}%0a`;
+  if(phone) msg += `טלפון: ${phone}%0a`;
+  if(note) msg += `הערות: ${note}%0a`;
+  window.open(`https://wa.me/${STORE_PHONE}?text=${msg}`, '_blank');
+}
+
+function contactWA(){
+  window.open(`https://wa.me/${STORE_PHONE}`, '_blank');
+}
+function callStore(){
+  window.open('tel:0543220983');
+}
+
+renderChips();
+renderProducts();
+</script>
+</body>
+</html>
