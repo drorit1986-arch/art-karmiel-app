@@ -30,10 +30,10 @@ body{
 }
 header{
   position:sticky; top:0; z-index:20; background:var(--card);
-  padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) 16px 10px;
   border-bottom:1px solid var(--line);
-  display:flex; align-items:center; justify-content:space-between;
 }
+.header-top{display:flex; align-items:center; justify-content:space-between}
 header h1{font-size:18px; margin:0; color:var(--brand)}
 header .sub{font-size:11px; color:var(--muted); margin-top:2px}
 .cart-btn{
@@ -45,6 +45,12 @@ header .sub{font-size:11px; color:var(--muted); margin-top:2px}
   border-radius:50%; width:18px; height:18px; font-size:11px;
   display:flex; align-items:center; justify-content:center;
 }
+.search-wrap{margin-top:10px; position:relative}
+.search-wrap input{
+  width:100%; padding:10px 36px 10px 12px; border-radius:12px; border:1px solid var(--line);
+  background:var(--paper); color:var(--ink); font-size:14px;
+}
+.search-wrap .ic{position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:15px}
 main{flex:1; overflow-y:auto; padding:12px 16px 90px}
 .chips{display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; margin-bottom:12px}
 .chip{
@@ -60,16 +66,23 @@ main{flex:1; overflow-y:auto; padding:12px 16px 90px}
 .thumb{
   width:100%; aspect-ratio:1; border-radius:10px; margin-bottom:8px;
   display:flex; align-items:center; justify-content:center; font-size:28px;
-  background:linear-gradient(135deg,#f1e4d0,#e3d3c1);
+  background:linear-gradient(135deg,#f1e4d0,#e3d3c1); overflow:hidden; cursor:pointer;
 }
+.thumb img{width:100%; height:100%; object-fit:cover}
 @media (prefers-color-scheme:dark){.thumb{background:linear-gradient(135deg,#332a20,#241d17)}}
-.card .name{font-size:13px; line-height:1.35; min-height:36px}
+.card .name{font-size:13px; line-height:1.35; min-height:36px; cursor:pointer}
 .card .price{color:var(--brand); font-weight:700; margin:6px 0 8px; font-size:14px}
+.card-actions{display:flex; gap:6px}
 .add-btn{
-  border:none; background:var(--brand-2); color:#fff; border-radius:9px;
+  flex:1; border:none; background:var(--brand-2); color:#fff; border-radius:9px;
   padding:8px; font-size:13px; cursor:pointer;
 }
+.share-btn{
+  border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:9px;
+  padding:8px 10px; font-size:13px; cursor:pointer;
+}
 .section-title{font-size:15px; margin:18px 0 10px; font-weight:700}
+.no-results{text-align:center; color:var(--muted); padding:40px 0; font-size:13px}
 nav.bottom{
   position:fixed; bottom:0; left:0; right:0; background:var(--card);
   border-top:1px solid var(--line); display:flex;
@@ -88,7 +101,7 @@ nav.bottom .ic{font-size:19px}
 .sheet-overlay.open{display:block}
 .sheet{
   position:fixed; left:0; right:0; bottom:0; background:var(--card);
-  border-radius:18px 18px 0 0; z-index:31; max-height:80vh; overflow-y:auto;
+  border-radius:18px 18px 0 0; z-index:31; max-height:85vh; overflow-y:auto;
   padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));
   transform:translateY(100%); transition:transform .25s ease;
 }
@@ -98,7 +111,8 @@ nav.bottom .ic{font-size:19px}
 .cart-row .qty{display:flex; align-items:center; gap:8px}
 .qty button{width:26px; height:26px; border-radius:8px; border:1px solid var(--line); background:var(--paper); color:var(--ink); font-size:15px}
 .total-row{display:flex; justify-content:space-between; font-weight:700; padding:14px 0; font-size:15px}
-.field{width:100%; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--paper); color:var(--ink); font-size:14px; margin-bottom:10px}
+.field{width:100%; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--paper); color:var(--ink); font-size:14px; margin-bottom:6px}
+.field-err{color:#c1440e; font-size:11px; margin:-2px 0 10px; min-height:14px}
 .send-btn{
   width:100%; padding:13px; border:none; border-radius:12px; background:var(--brand-2);
   color:#fff; font-size:15px; font-weight:700; cursor:pointer;
@@ -106,18 +120,31 @@ nav.bottom .ic{font-size:19px}
 .note{font-size:12px; color:var(--muted); text-align:center; margin-top:8px}
 .empty{text-align:center; color:var(--muted); padding:30px 0; font-size:13px}
 .hidden{display:none !important}
+.product-hero{width:100%; aspect-ratio:1; border-radius:14px; overflow:hidden; margin-bottom:14px; display:flex; align-items:center; justify-content:center; font-size:60px; background:linear-gradient(135deg,#f1e4d0,#e3d3c1)}
+@media (prefers-color-scheme:dark){.product-hero{background:linear-gradient(135deg,#332a20,#241d17)}}
+.product-hero img{width:100%; height:100%; object-fit:cover}
+.product-title{font-size:17px; font-weight:700; margin-bottom:4px}
+.product-price{color:var(--brand); font-weight:700; font-size:18px; margin-bottom:10px}
+.product-desc{font-size:13px; color:var(--muted); line-height:1.5; margin-bottom:16px}
+.close-x{position:absolute; left:16px; top:16px; background:var(--paper); border:1px solid var(--line); border-radius:50%; width:30px; height:30px; font-size:15px; cursor:pointer; color:var(--ink)}
 </style>
 </head>
 <body>
 
 <header>
-  <div>
-    <h1>ארט כרמיאל 🎨</h1>
-    <div class="sub">החנות הוותיקה לציוד אומנות • משנת 1997</div>
+  <div class="header-top">
+    <div>
+      <h1>ארט כרמיאל 🎨</h1>
+      <div class="sub">החנות הוותיקה לציוד אומנות • משנת 1997</div>
+    </div>
+    <button class="cart-btn" onclick="openCart()">עגלה
+      <span class="badge hidden" id="cartBadge">0</span>
+    </button>
   </div>
-  <button class="cart-btn" onclick="openCart()">עגלה
-    <span class="badge hidden" id="cartBadge">0</span>
-  </button>
+  <div class="search-wrap">
+    <input id="searchInput" placeholder="חיפוש מוצר..." oninput="onSearch(this.value)">
+    <span class="ic">🔍</span>
+  </div>
 </header>
 
 <main id="main">
@@ -132,16 +159,25 @@ nav.bottom .ic{font-size:19px}
   <button onclick="callStore()"><span class="ic">📞</span>התקשרו</button>
 </nav>
 
-<div class="sheet-overlay" id="overlay" onclick="closeCart()"></div>
+<div class="sheet-overlay" id="overlay" onclick="closeAllSheets()"></div>
+
 <div class="sheet" id="cartSheet">
   <h2>ההזמנה שלי</h2>
   <div id="cartItems"></div>
   <div class="total-row"><span>סה"כ משוער</span><span id="cartTotal">0 ₪</span></div>
   <input class="field" id="custName" placeholder="שם מלא">
-  <input class="field" id="custPhone" placeholder="טלפון ליצירת קשר">
+  <div class="field-err"></div>
+  <input class="field" id="custPhone" placeholder="טלפון ליצירת קשר" oninput="validatePhone()">
+  <div class="field-err" id="phoneErr"></div>
   <textarea class="field" id="custNote" placeholder="הערות (צבע, מידה, כמות מדויקת...)" rows="2"></textarea>
+  <div class="field-err"></div>
   <button class="send-btn" onclick="sendOrder()">שליחת ההזמנה בוואטסאפ</button>
   <div class="note">זו לא רכישה מקוונת — ההזמנה נשלחת לחנות ואתם תתואמו איתם תשלום ואיסוף/משלוח</div>
+</div>
+
+<div class="sheet" id="productSheet" style="position:relative">
+  <button class="close-x" onclick="closeAllSheets()">✕</button>
+  <div id="productDetail"></div>
 </div>
 
 <script>
@@ -152,49 +188,61 @@ const STORE_EMOJI = {
   "צבעים לאומנות":"🎨","תחריט והדפס":"🖨️"
 };
 
+// כל מוצר: img ו-desc הם null כרגע (ימולאו אוטומטית עם חיבור ל-WooCommerce API)
 const catalog = {
   "צבעים לאומנות":[
-    {n:"סט צבעי שמן 24 יחידות", p:89},
-    {n:"צבעי מים קוביות וואן גוך 18 יחידות", p:186},
-    {n:"צבעי מים חברת סקורה 36 יח'", p:203},
-    {n:"צבעי מים סקורה 60 יח'", p:356},
-    {n:"צבעי מים וואן גוך 12 יח'", p:104},
+    {n:"סט צבעי שמן 24 יחידות", p:89, img:null, desc:null},
+    {n:"צבעי מים קוביות וואן גוך 18 יחידות", p:186, img:null, desc:null},
+    {n:"צבעי מים חברת סקורה 36 יח'", p:203, img:null, desc:null},
+    {n:"צבעי מים סקורה 60 יח'", p:356, img:null, desc:null},
+    {n:"צבעי מים וואן גוך 12 יח'", p:104, img:null, desc:null},
   ],
   "מרקרים וטושים":[
-    {n:"פנדה 12 יח' חברת TALENS", p:15},
-    {n:"פנדה 24 יח' חברת TALENS", p:27},
-    {n:"עט גלי רול לבן מידה 10", p:10},
+    {n:"פנדה 12 יח' חברת TALENS", p:15, img:null, desc:null},
+    {n:"פנדה 24 יח' חברת TALENS", p:27, img:null, desc:null},
+    {n:"עט גלי רול לבן מידה 10", p:10, img:null, desc:null},
   ],
   "רישום וגרפיקה":[
-    {n:"רפידוגרף חד פעמי סקורה מידה 01", p:9},
-    {n:"רפידוגרף חד פעמי סקורה מידה 03", p:9},
-    {n:"רפידוגרף חד פעמי סקורה מידה 05", p:9},
-    {n:"רפידוגרף חד פעמי סקורה מידה 08", p:9},
+    {n:"רפידוגרף חד פעמי סקורה מידה 01", p:9, img:null, desc:null},
+    {n:"רפידוגרף חד פעמי סקורה מידה 03", p:9, img:null, desc:null},
+    {n:"רפידוגרף חד פעמי סקורה מידה 05", p:9, img:null, desc:null},
+    {n:"רפידוגרף חד פעמי סקורה מידה 08", p:9, img:null, desc:null},
   ],
   "בדי קנבס":[
-    {n:"קנבס מתוח 30x40 ס\"מ", p:25},
-    {n:"קנבס מתוח 50x70 ס\"מ", p:55},
+    {n:"קנבס מתוח 30x40 ס\"מ", p:25, img:null, desc:null},
+    {n:"קנבס מתוח 50x70 ס\"מ", p:55, img:null, desc:null},
   ],
   "כני ציור":[
-    {n:"כן ציור עץ מתקפל", p:145},
-    {n:"כן ציור שולחני", p:79},
+    {n:"כן ציור עץ מתקפל", p:145, img:null, desc:null},
+    {n:"כן ציור שולחני", p:79, img:null, desc:null},
   ],
   "מכחולים":[
-    {n:"סט מכחולים לאקריליק ומים", p:39},
-    {n:"מכחול שמן עגול מס' 8", p:14},
+    {n:"סט מכחולים לאקריליק ומים", p:39, img:null, desc:null},
+    {n:"מכחול שמן עגול מס' 8", p:14, img:null, desc:null},
   ],
   "חומרי יצירה":[
-    {n:"פימו Fimo צבעוני 8 יח'", p:69},
-    {n:"סט אביזרי יצירה בסיסי", p:45},
+    {n:"פימו Fimo צבעוני 8 יח'", p:69, img:null, desc:null},
+    {n:"סט אביזרי יצירה בסיסי", p:45, img:null, desc:null},
   ],
   "נייר":[
-    {n:"בלוק ציור לאקוורל A4", p:42},
-    {n:"ספר סקיצות A5", p:28},
+    {n:"בלוק ציור לאקוורל A4", p:42, img:null, desc:null},
+    {n:"ספר סקיצות A5", p:28, img:null, desc:null},
   ],
 };
 
 let cart = {};
 let currentCat = "הכל";
+let searchTerm = "";
+
+function loadCart(){
+  try{
+    const raw = localStorage.getItem('artKarmielCart');
+    if(raw) cart = JSON.parse(raw);
+  }catch(e){ cart = {}; }
+}
+function saveCart(){
+  try{ localStorage.setItem('artKarmielCart', JSON.stringify(cart)); }catch(e){}
+}
 
 function allProducts(){
   const list=[];
@@ -213,36 +261,80 @@ function renderChips(){
 }
 
 function setCat(c){ currentCat=c; renderChips(); renderProducts(); }
+function onSearch(v){ searchTerm=v.trim(); renderProducts(); }
 
 function renderProducts(){
   const wrap=document.getElementById('productsWrap');
-  const items = currentCat==="הכל" ? allProducts() : catalog[currentCat].map(it=>({...it,cat:currentCat}));
-  if(currentCat==="הכל"){
+  let base = currentCat==="הכל" ? allProducts() : catalog[currentCat].map(it=>({...it,cat:currentCat}));
+  if(searchTerm){
+    base = base.filter(it=>it.n.includes(searchTerm));
+  }
+  if(base.length===0){
+    wrap.innerHTML = `<div class="no-results">לא נמצאו מוצרים תואמים לחיפוש</div>`;
+    return;
+  }
+  if(currentCat==="הכל" && !searchTerm){
     let html='';
     for(const [cat,list] of Object.entries(catalog)){
       html += `<div class="section-title">${STORE_EMOJI[cat]||''} ${cat}</div><div class="grid">`;
-      html += list.map(it=>productCard(it,cat)).join('');
+      html += list.map((it,i)=>productCard({...it,cat},cat,i)).join('');
       html += `</div>`;
     }
     wrap.innerHTML = html;
   } else {
-    wrap.innerHTML = `<div class="grid">${items.map(it=>productCard(it,currentCat)).join('')}</div>`;
+    wrap.innerHTML = `<div class="grid">${base.map((it,i)=>productCard(it,it.cat,i)).join('')}</div>`;
   }
 }
 
-function productCard(it,cat){
+function thumbHtml(it,cat){
+  return it.img ? `<img src="${it.img}" alt="${it.n}">` : (STORE_EMOJI[cat]||'🎨');
+}
+
+function productCard(it,cat,i){
   const key = cat+"__"+it.n;
+  const idx = productIndex(cat, it.n);
   return `<div class="card">
-    <div class="thumb">${STORE_EMOJI[cat]||'🎨'}</div>
-    <div class="name">${it.n}</div>
+    <div class="thumb" onclick="openProduct('${cat.replace(/'/g,"\\'")}',${idx})">${thumbHtml(it,cat)}</div>
+    <div class="name" onclick="openProduct('${cat.replace(/'/g,"\\'")}',${idx})">${it.n}</div>
     <div class="price">${it.p} ₪</div>
-    <button class="add-btn" onclick="addToCart('${key.replace(/'/g,"\\'")}','${it.n.replace(/'/g,"\\'")}',${it.p})">הוספה לעגלה</button>
+    <div class="card-actions">
+      <button class="add-btn" onclick="addToCart('${key.replace(/'/g,"\\'")}','${it.n.replace(/'/g,"\\'")}',${it.p})">הוספה לעגלה</button>
+      <button class="share-btn" onclick="shareProduct('${it.n.replace(/'/g,"\\'")}',${it.p})">↗</button>
+    </div>
   </div>`;
+}
+
+function productIndex(cat,name){
+  return catalog[cat].findIndex(p=>p.n===name);
+}
+
+function openProduct(cat, idx){
+  const it = catalog[cat][idx];
+  const detail = document.getElementById('productDetail');
+  detail.innerHTML = `
+    <div class="product-hero">${thumbHtml(it,cat)}</div>
+    <div class="product-title">${it.n}</div>
+    <div class="product-price">${it.p} ₪</div>
+    <div class="product-desc">${it.desc || 'תיאור מלא ותמונה אמיתית יתווספו אוטומטית עם חיבור לקטלוג החנות.'}</div>
+    <button class="send-btn" onclick="addToCart('${cat.replace(/'/g,"\\'")}__${it.n.replace(/'/g,"\\'")}','${it.n.replace(/'/g,"\\'")}',${it.p}); closeAllSheets();">הוספה לעגלה</button>
+  `;
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('productSheet').classList.add('open');
+}
+
+function shareProduct(name, price){
+  const text = `${name} - ${price} ₪ בארט כרמיאל`;
+  if(navigator.share){
+    navigator.share({title:name, text}).catch(()=>{});
+  } else {
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  }
 }
 
 function addToCart(key,name,price){
   if(!cart[key]) cart[key]={name,price,qty:0};
   cart[key].qty++;
+  saveCart();
   updateBadge();
   renderCart();
 }
@@ -250,6 +342,7 @@ function changeQty(key,delta){
   if(!cart[key]) return;
   cart[key].qty+=delta;
   if(cart[key].qty<=0) delete cart[key];
+  saveCart();
   updateBadge();
   renderCart();
 }
@@ -284,17 +377,29 @@ function openCart(){
   document.getElementById('cartSheet').classList.add('open');
   renderCart();
 }
-function closeCart(){
+function closeAllSheets(){
   document.getElementById('overlay').classList.remove('open');
   document.getElementById('cartSheet').classList.remove('open');
+  document.getElementById('productSheet').classList.remove('open');
 }
 function scrollTop(){ document.getElementById('main').scrollTo({top:0,behavior:'smooth'}); }
+
+function validatePhone(){
+  const phone = document.getElementById('custPhone').value.trim();
+  const err = document.getElementById('phoneErr');
+  if(phone.length===0){ err.textContent=''; return true; }
+  const clean = phone.replace(/[\s-]/g,'');
+  const valid = /^(\+972|0)5\d{8}$/.test(clean) || /^(\+972|0)[2-9]\d{7,8}$/.test(clean);
+  err.textContent = valid ? '' : 'מספר טלפון לא תקין';
+  return valid;
+}
 
 function sendOrder(){
   const entries=Object.entries(cart);
   if(entries.length===0){ alert('העגלה ריקה — הוסיפו מוצרים לפני שליחת ההזמנה'); return; }
-  const name=document.getElementById('custName').value.trim();
   const phone=document.getElementById('custPhone').value.trim();
+  if(phone && !validatePhone()){ return; }
+  const name=document.getElementById('custName').value.trim();
   const note=document.getElementById('custNote').value.trim();
   let msg = `שלום ארט כרמיאל, אשמח להזמין:%0a`;
   entries.forEach(([,it])=>{ msg += `• ${it.name} x${it.qty} (${it.price*it.qty} ₪)%0a`; });
@@ -313,8 +418,10 @@ function callStore(){
   window.open('tel:0543220983');
 }
 
+loadCart();
 renderChips();
 renderProducts();
+updateBadge();
 </script>
 </body>
 </html>
