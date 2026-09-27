@@ -188,45 +188,75 @@ const STORE_EMOJI = {
   "צבעים לאומנות":"🎨","תחריט והדפס":"🖨️"
 };
 
-// כל מוצר: img ו-desc הם null כרגע (ימולאו אוטומטית עם חיבור ל-WooCommerce API)
+// כל מוצר מגיע ישירות מה-API של WooCommerce של החנות (5 המוצרים הפופולריים ביותר לכל קטגוריה)
 const catalog = {
   "צבעים לאומנות":[
-    {n:"סט צבעי שמן 24 יחידות", p:89, img:null, desc:null},
-    {n:"צבעי מים קוביות וואן גוך 18 יחידות", p:186, img:null, desc:null},
-    {n:"צבעי מים חברת סקורה 36 יח'", p:203, img:null, desc:null},
-    {n:"צבעי מים סקורה 60 יח'", p:356, img:null, desc:null},
-    {n:"צבעי מים וואן גוך 12 יח'", p:104, img:null, desc:null},
+    {n:"צבעי מים סאן פטסבורג 12 יחידות", p:129, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/10/צבעי-מים-סאן-פטסבורג-12-יחידות.png", desc:null},
+    {n:"צבעי מים קוביות וואך גוך 36 יחידות", p:313, img:"https://www.art-karmiel.co.il/wp-content/uploads/2022/05/צבעי-מים-קוביות-וואך-גוך-36-יחידות.png", desc:null},
+    {n:"סט צבעי מים שפורפרות WHITE NIGHT 12 יחידות", p:168, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/10/סט-צבעי-מים-שפורפרות-WHITE-NIGHT-12-יחידות.png", desc:null},
+    {n:"סט צבעי מים WHITE NIGHT 24 יחידות קופסאת קרטון", p:233, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/10/סט-צבעי-מים-WHITE-NIGHT-24-יחידות-קופסאת-קרטון.png", desc:null},
+    {n:"מארז 48 צבעי אקריליק מונט מארט", p:269, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/מארז-48-צבעי-אקריליק-מונט-מארט.png", desc:null},
+    {n:"מארז 24 יחידות צבעי אקריליק מונט מארט", p:142, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/מארז-24-יחידות-צבעי-אקריליק-מונט-מארט.png", desc:null},
   ],
   "מרקרים וטושים":[
-    {n:"פנדה 12 יח' חברת TALENS", p:15, img:null, desc:null},
-    {n:"פנדה 24 יח' חברת TALENS", p:27, img:null, desc:null},
-    {n:"עט גלי רול לבן מידה 10", p:10, img:null, desc:null},
+    {n:"סט 80 יחידות טוש אלכוהל", p:234, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/סט-80-יחידות-טוש-אלכוהל.png", desc:null},
+    {n:"BLUE GREY 9 טוש טאצ", p:18, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/BLUE-GREY-9-טוש-טאצ.png", desc:null},
+    {n:"טושים על בסיס מים מברשת 24 יחידות", p:126, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/10/טושים-על-בסיס-מים-מברשת-24-יחידות.png", desc:null},
+    {n:"טושים על בסיס מים מברשת 12 יחידות", p:66, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/10/טושים-על-בסיס-מים-מברשת-12-יחידות.png", desc:null},
+    {n:"מארז 60 יחידות טוש אלכוהל", p:175, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/מארז-60-יחידות-טוש-אלכוהל.png", desc:null},
+    {n:"סט טושים דו צדדיים טאצ", p:110, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/סט-טושים-דו-צדדיים-טאצ.png", desc:null},
   ],
   "רישום וגרפיקה":[
-    {n:"רפידוגרף חד פעמי סקורה מידה 01", p:9, img:null, desc:null},
-    {n:"רפידוגרף חד פעמי סקורה מידה 03", p:9, img:null, desc:null},
-    {n:"רפידוגרף חד פעמי סקורה מידה 05", p:9, img:null, desc:null},
-    {n:"רפידוגרף חד פעמי סקורה מידה 08", p:9, img:null, desc:null},
+    {n:"מחק פחם LYRA", p:6, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/מחק-פחם-LYRA.png", desc:null},
+    {n:"סט פחם גווני אדמה ART SPECIALS", p:79, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/סט-פעם-גווני-אדמה-ART-SPECIALS.png", desc:null},
+    {n:"רפידוגרף חד פעמי חברת סקורה מידה 08", p:9, img:"https://www.art-karmiel.co.il/wp-content/uploads/2022/05/רפידוגרף-חד-פעמי-חברת-סקורה-מידה-08.png", desc:null},
+    {n:"עט גלי רול לבן מידה 08", p:10, img:"https://www.art-karmiel.co.il/wp-content/uploads/2022/05/עט-גלי-רול-לבן-מידה-08.png", desc:null},
+    {n:"פבר קסטל סט פוליכרומוס 60 יחידות", p:489, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/10/פבר-קסטל-סט-פוליכרומוס-60-יחידות.png", desc:null},
+    {n:"בלוק שרטוט 90 גרם גודל A4", p:15, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/בלוק-שרטוט-90-גרם-גודל-A4.png", desc:null},
   ],
   "בדי קנבס":[
-    {n:"קנבס מתוח 30x40 ס\"מ", p:25, img:null, desc:null},
-    {n:"קנבס מתוח 50x70 ס\"מ", p:55, img:null, desc:null},
   ],
   "כני ציור":[
-    {n:"כן ציור עץ מתקפל", p:145, img:null, desc:null},
-    {n:"כן ציור שולחני", p:79, img:null, desc:null},
   ],
   "מכחולים":[
-    {n:"סט מכחולים לאקריליק ומים", p:39, img:null, desc:null},
-    {n:"מכחול שמן עגול מס' 8", p:14, img:null, desc:null},
+    {n:"מכחול מים מידה לארג", p:22, img:"https://www.art-karmiel.co.il/wp-content/uploads/2022/05/מכחול-מים-מידה-לארג.png", desc:null},
+    {n:"מכחול מים מידה מדיום", p:22, img:"https://www.art-karmiel.co.il/wp-content/uploads/2022/05/מכחול-מים-מידה-מדיום.png", desc:null},
+    {n:"מכחול מים מידה סמול", p:22, img:"https://www.art-karmiel.co.il/wp-content/uploads/2022/05/מכחול-מים-מידה-סמול.png", desc:null},
+    {n:"סט 6 יח' מכחולים אקריליק דאלר ראוני", p:42, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/סט-6-יח-מכחולים-אקריליק-דאלר-ראוני-1.png", desc:null},
+    {n:"סט 4 יחידות מכחולים לאקריליק", p:44, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/סט-4-יחידות-מכחולים-לאקריליק.png", desc:null},
+    {n:"סט מכחולים טופ", p:33, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/סט-מכחולים-טופ.png", desc:null},
   ],
   "חומרי יצירה":[
-    {n:"פימו Fimo צבעוני 8 יח'", p:69, img:null, desc:null},
-    {n:"סט אביזרי יצירה בסיסי", p:45, img:null, desc:null},
+    {n:"חמרן זהב", p:20, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/חמרן-זהב.png", desc:null},
+    {n:"דאס לבן", p:25, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/דאס-לבן.png", desc:null},
+    {n:"חימר טבעי לבן 1.5 קג", p:17, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/חימר-טבעי-לבן-1.5-קג.png", desc:null},
+    {n:"סט גואש טושטוש גוניס", p:29, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/10/סט-גואש-טושטוש-גוניס.png", desc:null},
+    {n:"אקדח דבק חם מיני", p:33, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/אקדח-דבק-חם-מיני.png", desc:null},
+    {n:"דאס חום", p:25, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/דאס-חום.png", desc:null},
   ],
   "נייר":[
-    {n:"בלוק ציור לאקוורל A4", p:42, img:null, desc:null},
-    {n:"ספר סקיצות A5", p:28, img:null, desc:null},
+    {n:"כנסון גודל A4 שמן ואקריליק Graduate", p:25, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/כנסון-A4-מים-ואקריליק-גרדואיט.png", desc:null},
+    {n:"בלוק A5 כנסון XL אקוורל", p:29, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/בלוק-כנסון-מים-A5.png", desc:null},
+    {n:"בלוק A3 מים Graduate", p:45, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/בלוק-A3-מים-גרדואיט.png", desc:null},
+    {n:"בלוק שרטוט 90 גרם גודל A4", p:15, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/בלוק-שרטוט-90-גרם-גודל-A4.png", desc:null},
+    {n:"בלוק סקיצה 52 גרם גודל A4", p:12, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/בלוק-סקיצה-52-גרם-גודל-A4.png", desc:null},
+    {n:"ספר סקיצה A3 דאלר ראוני", p:89, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/ספר-סקיצה-A3-דאלר-ראוני.png", desc:null},
+  ],
+  "מדיומים ולכות":[
+    {n:"מסקינג פילם דאלר ראוני", p:29, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/מסקינג-פילם-דאלר-ראוני.png", desc:null},
+    {n:"גסו לבן דאלר ראוני", p:99, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/גסו-לבן-דאלר-ראוני.png", desc:null},
+    {n:"ג'ל אקרילי אימפרסטו מבריק", p:55, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/גל-אקרילי-אימפרסטו-מבריק.png", desc:null},
+    {n:"לכה סטאן לצבעי אקריליק 75 מל", p:29, img:"https://www.art-karmiel.co.il/wp-content/uploads/2022/05/לכה-מבריקה-לאקריליק-75-מל.png", desc:null},
+    {n:"לכה מבריקה לאקריליק 75 מל", p:29, img:"https://www.art-karmiel.co.il/wp-content/uploads/2022/05/לכה-מבריקה-לאקריליק-75-מל.png", desc:null},
+    {n:"לכה מט לאקריליק 75 מל", p:29, img:"https://www.art-karmiel.co.il/wp-content/uploads/2022/05/לכה-מט-לאקריליק-75-מל.png", desc:null},
+  ],
+  "תחריט והדפס":[
+    {n:"סט גילוף לינולאום מורחב", p:62, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/סט-גילוף-לינולאום-10-יחידות.png", desc:null},
+    {n:"לינולאום להדפס", p:32, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/לינולאום-להדפס.png", desc:null},
+    {n:"גלגלת הדפס LINO", p:55.8, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/גלגלת-להדפס-100-מם.png", desc:null},
+    {n:"צבע הדפס שחור דאלר ראוני", p:64.8, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/צבע-הדפס-שחור-דאלר-ראוני.png", desc:null},
+    {n:"סכין גילוף לינולאום", p:46.8, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/סכין-גילוף-מוכן-אתר.png", desc:null},
+    {n:"סט גילוף לינולאום", p:20, img:"https://www.art-karmiel.co.il/wp-content/uploads/2021/09/סט-גילוף-לינולאום-5-יחידות.png", desc:null},
   ],
 };
 
@@ -315,7 +345,7 @@ function openProduct(cat, idx){
     <div class="product-hero">${thumbHtml(it,cat)}</div>
     <div class="product-title">${it.n}</div>
     <div class="product-price">${it.p} ₪</div>
-    <div class="product-desc">${it.desc || 'תיאור מלא ותמונה אמיתית יתווספו אוטומטית עם חיבור לקטלוג החנות.'}</div>
+    <div class="product-desc">${it.desc || 'תיאור מלא יוצג בהזמנה עצמה — צרו קשר או הוסיפו לעגלה לפרטים נוספים.'}</div>
     <button class="send-btn" onclick="addToCart('${cat.replace(/'/g,"\\'")}__${it.n.replace(/'/g,"\\'")}','${it.n.replace(/'/g,"\\'")}',${it.p}); closeAllSheets();">הוספה לעגלה</button>
   `;
   document.getElementById('overlay').classList.add('open');
