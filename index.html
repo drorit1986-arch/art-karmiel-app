@@ -293,6 +293,22 @@ function renderChips(){
 function setCat(c){ currentCat=c; renderChips(); renderProducts(); }
 function onSearch(v){ searchTerm=v.trim(); renderProducts(); }
 
+function emptyStateHtml(catName){
+  const label = catName ? `בקטגוריית "${catName}"` : 'לחיפוש שלך';
+  return `<div class="no-results">
+    <div style="font-size:32px; margin-bottom:8px;">🛠️</div>
+    רגע אין מוצרים זמינים ${label}.<br>שלחו לנו הודעה בוואטסאפ ונעדכן אתכם כשיגיע.
+    <div style="margin-top:14px;">
+      <button class="send-btn" style="width:auto; padding:10px 20px; display:inline-block;" onclick="askAboutCategory('${(catName||'').replace(/'/g,"\\'")}')">שלחו שאלה</button>
+    </div>
+  </div>`;
+}
+
+function askAboutCategory(catName){
+  const text = catName ? `שלום, אשמח לדעת מתי יהיו זמינים מוצרים בקטגוריית "${catName}"` : 'שלום, יש לי שאלה לגבי מוצר';
+  window.open(`https://wa.me/${STORE_PHONE}?text=${encodeURIComponent(text)}`, '_blank');
+}
+
 function renderProducts(){
   const wrap=document.getElementById('productsWrap');
   let base = currentCat==="הכל" ? allProducts() : catalog[currentCat].map(it=>({...it,cat:currentCat}));
@@ -300,15 +316,20 @@ function renderProducts(){
     base = base.filter(it=>it.n.includes(searchTerm));
   }
   if(base.length===0){
-    wrap.innerHTML = `<div class="no-results">לא נמצאו מוצרים תואמים לחיפוש</div>`;
+    wrap.innerHTML = searchTerm
+      ? `<div class="no-results">לא נמצאו מוצרים תואמים לחיפוש</div>`
+      : emptyStateHtml(currentCat!=="הכל" ? currentCat : null);
     return;
   }
   if(currentCat==="הכל" && !searchTerm){
     let html='';
     for(const [cat,list] of Object.entries(catalog)){
-      html += `<div class="section-title">${STORE_EMOJI[cat]||''} ${cat}</div><div class="grid">`;
-      html += list.map((it,i)=>productCard({...it,cat},cat,i)).join('');
-      html += `</div>`;
+      html += `<div class="section-title">${STORE_EMOJI[cat]||''} ${cat}</div>`;
+      if(list.length===0){
+        html += emptyStateHtml(cat);
+      } else {
+        html += `<div class="grid">` + list.map((it,i)=>productCard({...it,cat},cat,i)).join('') + `</div>`;
+      }
     }
     wrap.innerHTML = html;
   } else {
