@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: art-karmiel-app
+    runtime: static
+    buildCommand: node scripts/update-products.mjs
+    staticPublishPath: .
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
