@@ -12,7 +12,7 @@ self.addEventListener('fetch', e => {
   const req = e.request; if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;
-  // האפליקציה וקטלוג המוצרים: קודם מהרשת (כדי ללבל מחירים עדכניים), ואם אין רשת – מהמטמון
+  // האפליקציה וקטלוג המוצרים: קודם מהרשת (כדי לקבל מחירים עדכניים), ואם אין רשת – מהמטמון
   e.respondWith(fetch(req).then(res => { const copy = res.clone(); caches.open(V).then(c => c.put(req, copy)); return res; })
     .catch(() => caches.match(req).then(r => r || caches.match('index.html'))));
 });
